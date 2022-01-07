@@ -13,21 +13,49 @@ namespace ConsoleUI
             //ProductTest();
             //IoC 
             //CategoryTest();
+            //ProductGetProductDetailDtosTest();
+
 
             ProductManager productManager = new ProductManager(new EfProductDal());
+            var result = productManager.GetAll();
 
-            foreach (var product in productManager.GetProductDetailDtos())
+            if (result.Success == true)
             {
-                Console.WriteLine(product.ProductName + " // " + product.CategoryName);
+                foreach (var product in result.Data)
+                {
+                    Console.WriteLine(product.ProductName);
+                }
+            }
+            else
+            {
+                Console.WriteLine(result.Message);
             }
 
+        }
 
+        private static void ProductGetProductDetailDtosTest()
+        {
+            ProductManager productManager = new ProductManager(new EfProductDal());
+            var result = productManager.GetProductDetailDtos();
+
+            if (result.Success == true)
+            {
+                foreach (var product in result.Data)
+                {
+                    Console.WriteLine(product.ProductName + " // " + product.CategoryName);
+                }
+            }
+            else
+            {
+                Console.WriteLine(result.Message);
+            }
         }
 
         private static void CategoryTest()
         {
             CategoryManager categoryManager = new CategoryManager(new EfCategoryDal());
-            foreach (var category in categoryManager.GetAll())
+            var result = categoryManager.GetAll();           
+            foreach (var category in result)
             {
                 Console.WriteLine(category.CategoryName);
             }
@@ -36,9 +64,9 @@ namespace ConsoleUI
         private static void ProductTest()
         {
             ProductManager productManager = new ProductManager(new EfProductDal());
+            var result2 = productManager.GetByUnitsPrice(50, 100);
 
-
-            foreach (var product in productManager.GetByUnitsPrice(50, 100))
+            foreach (var product in result2.Data)
             {
                 Console.WriteLine(product.ProductName);
             }
