@@ -11,6 +11,7 @@ namespace WebAPI
 {
     public class Program
     {
+        //RESTFUL ----> HTTP (KABLOSUZ BAÐLANTI)----> TCP (KABLOLU BAÐLANTI)
         public static void Main(string[] args)
         {
             CreateHostBuilder(args).Build().Run();

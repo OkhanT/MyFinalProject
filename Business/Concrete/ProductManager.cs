@@ -43,7 +43,7 @@ namespace Business.Concrete
                 return new ErrorDataResult<List<Product>>(_productDal.GetAll(),Messages.MaintenanceTime);
             }
 
-            return new SuccessDataResult<List<Product>>(_productDal.GetAll(), Messages.ProductAdded);
+            return new SuccessDataResult<List<Product>>(_productDal.GetAll(), Messages.ProductsListed);
             
         }
 
