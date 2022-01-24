@@ -9,6 +9,7 @@ namespace Core.CrossCuttingConcerns.Validation
 {
     public class ValidationTool
     {
+        //IValidator ==> ProductValidator
         public static void Validate(IValidator validator, object entity)
         {
             var context = new ValidationContext<object>(entity);

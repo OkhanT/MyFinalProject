@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.CCS;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspect.Autofac.Validation;
@@ -19,22 +20,33 @@ namespace Business.Concrete
     public class ProductManager : IProductService
     {
         IProductDal _productDal;
+        ILogger _logger;
 
-        public ProductManager(IProductDal productDal)
+        public ProductManager(IProductDal productDal, ILogger logger)
         {
             _productDal = productDal;
+            _logger = logger;
         }
 
-        [ValidationAspect(typeof(ProductValidator))]
+        //[ValidationAspect(typeof(ProductValidator))]
         public IResult Add(Product product)
         {
-            //Business codes
-            //Validation 
-            //validation eklemek istenen nesnenin yapısal olarak uygun olup olmadığını kontrol eder.
+            _logger.Log();
+            try
+            {
+                _productDal.Add(product);
+                return new SuccessResult(Messages.ProductAdded);
+            }
+            catch (Exception exception)
+            {
 
-            _productDal.Add(product);
+                _logger.Log();
+            }
 
-            return new SuccessResult(Messages.ProductAdded);
+            return new ErrorResult();
+            
+
+           
 
         }
 
