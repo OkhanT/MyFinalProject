@@ -16,7 +16,7 @@ namespace ConsoleUI
             //ProductGetProductDetailDtosTest();
 
 
-            ProductManager productManager = new ProductManager(new EfProductDal());
+            ProductManager productManager = new ProductManager(new EfProductDal(), new CategoryManager(new EfCategoryDal()));
             var result = productManager.GetAll();
 
             if (result.Success == true)
@@ -35,7 +35,7 @@ namespace ConsoleUI
 
         private static void ProductGetProductDetailDtosTest()
         {
-            ProductManager productManager = new ProductManager(new EfProductDal());
+            ProductManager productManager = new ProductManager(new EfProductDal(), new CategoryManager(new EfCategoryDal()));
             var result = productManager.GetProductDetailDtos();
 
             if (result.Success == true)
@@ -55,7 +55,7 @@ namespace ConsoleUI
         {
             CategoryManager categoryManager = new CategoryManager(new EfCategoryDal());
             var result = categoryManager.GetAll();           
-            foreach (var category in result)
+            foreach (var category in result.Data)
             {
                 Console.WriteLine(category.CategoryName);
             }
@@ -63,7 +63,7 @@ namespace ConsoleUI
 
         private static void ProductTest()
         {
-            ProductManager productManager = new ProductManager(new EfProductDal());
+            ProductManager productManager = new ProductManager(new EfProductDal(), new CategoryManager(new EfCategoryDal()));
             var result2 = productManager.GetByUnitsPrice(50, 100);
 
             foreach (var product in result2.Data)
