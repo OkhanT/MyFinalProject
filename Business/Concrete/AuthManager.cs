@@ -27,7 +27,7 @@ namespace Business.Concrete
         {
             byte[] passwordHash, passwordSalt;
            
-            HashingHelper.CreatePasswordHash(password, out passwordHash, passwordSalt);
+            HashingHelper.CreatePasswordHash(password, out passwordHash, out passwordSalt);
             var user = new User
             {
                 Email = userForRegisterDto.Email,
@@ -51,20 +51,26 @@ namespace Business.Concrete
 
             if (!HashingHelper.VerifyPasswordHash(userForLoginDto.Password, userToCheck.PasswordHash, userToCheck.PasswordSalt))
             {
-                re
+                return new ErrorDataResult<User>(Messages.PasswordError);
             }
+            return new SuccessDataResult<User>(userToCheck, Messages.SuccessfulLogin);
+        }
+
+        public IResult UserExists(string email)
+        {
+            if (_userService.GetByMail(email) != null)
+            {
+                return new ErrorResult(Messages.UserAlreadyExists);
+            }
+            return new SuccessResult();
         }
 
         public IDataResult<AccessToken> CreateAccessToken(User user)
         {
-            throw new NotImplementedException();
+            var claims = _userService.GetClaims(user);
+            var accessToken = _tokenHelper.CreateToken(user, claims);
+            return new SuccessDataResult<AccessToken>(accessToken, Messages.AccessTokenCreated);
         }
-
-              
-
-        public IResult UserExists(string email)
-        {
-            throw new NotImplementedException();
-        }
+       
     }
 }
