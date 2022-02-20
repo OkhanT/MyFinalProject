@@ -1,6 +1,7 @@
 ﻿using Castle.DynamicProxy;
 using Core.Aspect.Autofac.Exception;
-using Microsoft.Build.Logging;
+using Core.CrossCuttingConcerns.Logging.Log4Net.Loggers;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
